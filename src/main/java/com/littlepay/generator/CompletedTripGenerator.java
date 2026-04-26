@@ -1,18 +1,19 @@
 package com.littlepay.generator;
 
-import com.littlepay.constant.TripCosts;
 import com.littlepay.model.TapRecord;
 import com.littlepay.model.Trip;
+import com.littlepay.model.TripFare;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import static com.littlepay.model.TripStatus.COMPLETED;
 
 @RequiredArgsConstructor
 public class CompletedTripGenerator implements TripGenerator {
 
-    private final TripCosts tripCosts;
+    private final Map<String, Map<String, TripFare>> tripFares;
 
     @Override
     public Trip generate(TapRecord start, TapRecord end) {
@@ -34,6 +35,7 @@ public class CompletedTripGenerator implements TripGenerator {
     }
 
     private BigDecimal calculateChargeAmount(String onStop, String offStop) {
-        return tripCosts.getTripCostMap().get(onStop).get(offStop).amount();
+        return tripFares.get(onStop).get(offStop).amount();
     }
+
 }
