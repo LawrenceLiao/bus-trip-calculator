@@ -1,4 +1,4 @@
-package com.littlepay.service;
+package com.littlepay.csv;
 
 import com.littlepay.helper.DateTimeHelper;
 import com.littlepay.model.TapRecord;

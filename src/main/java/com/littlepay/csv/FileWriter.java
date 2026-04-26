@@ -1,4 +1,4 @@
-package com.littlepay.service;
+package com.littlepay.csv;
 
 import com.littlepay.model.Trip;
 import org.apache.commons.csv.CSVFormat;
