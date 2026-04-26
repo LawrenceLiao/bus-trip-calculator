@@ -5,6 +5,8 @@ import lombok.Builder;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import static com.littlepay.helper.DateTimeHelper.formatDate;
+
 @Builder
 public record Trip(
         OffsetDateTime started,
@@ -18,4 +20,9 @@ public record Trip(
         String pan,
         TripStatus status
 ) {
+    @Override
+    public String toString() {
+        return formatDate(started) + ", " + formatDate(finished) + ", " + durationSecs + ", " + fromStopId + ", " + toStopId + ", $"
+                + chargeAmount + ", " + companyId + ", " + busId + ", " + pan + ", " + status;
+    }
 }

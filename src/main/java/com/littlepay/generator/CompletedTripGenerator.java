@@ -19,18 +19,18 @@ public class CompletedTripGenerator implements TripGenerator {
 
         BigDecimal chargeAmount = calculateChargeAmount(start.stopId(), end.stopId());
 
-        return new Trip(
-                start.tapAt(),
-                end.tapAt(),
-                calculateDuration(start, end),
-                start.stopId(),
-                end.stopId(),
-                chargeAmount,
-                start.companyId(),
-                start.busId(),
-                start.pan(),
-                COMPLETED
-        );
+        return Trip.builder()
+                .started(start.tapAt())
+                .finished(end.tapAt())
+                .durationSecs(calculateDuration(start, end))
+                .fromStopId(start.stopId())
+                .toStopId(end.stopId())
+                .chargeAmount(chargeAmount)
+                .companyId(start.companyId())
+                .busId(start.busId())
+                .pan(start.pan())
+                .status(COMPLETED)
+                .build();
     }
 
     private BigDecimal calculateChargeAmount(String onStop, String offStop) {

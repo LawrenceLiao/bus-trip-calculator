@@ -21,18 +21,18 @@ public class IncompleteTripGenerator implements TripGenerator {
     public Trip generate(TapRecord start, TapRecord end) {
         BigDecimal chargeAmount = calculateChargeAmount(start.stopId());
 
-        return new Trip(
-                start.tapAt(),
-                end.tapAt(),
-                calculateDuration(start, end),
-                start.stopId(),
-                EMPTY_STRING,
-                chargeAmount,
-                start.companyId(),
-                start.busId(),
-                start.pan(),
-                INCOMPLETE
-        );
+        return Trip.builder()
+                .started(start.tapAt())
+                .finished(end.tapAt())
+                .durationSecs(calculateDuration(start, end))
+                .fromStopId(start.stopId())
+                .toStopId(EMPTY_STRING)
+                .chargeAmount(chargeAmount)
+                .companyId(start.companyId())
+                .busId(start.busId())
+                .pan(start.pan())
+                .status(INCOMPLETE)
+                .build();
     }
 
     private BigDecimal calculateChargeAmount(String onStop) {

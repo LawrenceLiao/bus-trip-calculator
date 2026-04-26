@@ -12,17 +12,17 @@ public class CancelledTripGenerator implements TripGenerator {
 
     @Override
     public Trip generate(TapRecord start, TapRecord end) {
-        return new Trip(
-                start.tapAt(),
-                end.tapAt(),
-                calculateDuration(start, end),
-                start.stopId(),
-                end.stopId(),
-                BigDecimal.ZERO,
-                start.companyId(),
-                start.busId(),
-                start.pan(),
-                CANCELLED
-        );
+        return Trip.builder()
+                .started(start.tapAt())
+                .finished(end.tapAt())
+                .durationSecs(calculateDuration(start, end))
+                .fromStopId(start.stopId())
+                .toStopId(end.stopId())
+                .chargeAmount(BigDecimal.ZERO)
+                .companyId(start.companyId())
+                .busId(start.busId())
+                .pan(start.pan())
+                .status(CANCELLED)
+                .build();
     }
 }
