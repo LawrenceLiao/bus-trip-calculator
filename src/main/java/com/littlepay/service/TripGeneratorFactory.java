@@ -1,11 +1,10 @@
 package com.littlepay.service;
 
-import com.littlepay.constant.TripCosts;
+import com.littlepay.config.TripFares;
 import com.littlepay.generator.CancelledTripGenerator;
 import com.littlepay.generator.CompletedTripGenerator;
 import com.littlepay.generator.IncompleteTripGenerator;
 import com.littlepay.generator.TripGenerator;
-import com.littlepay.model.TripStatus;
 
 import java.util.Map;
 
@@ -14,21 +13,19 @@ import static com.littlepay.model.TripStatus.COMPLETED;
 import static com.littlepay.model.TripStatus.INCOMPLETE;
 
 public class TripGeneratorFactory {
-    private final Map<TripStatus, TripGenerator> tripGenerators;
+    private final Map<String, TripGenerator> tripGenerators;
 
     public TripGeneratorFactory() {
-        TripCosts tripCosts = new TripCosts();
-
         tripGenerators = Map.of(
-                COMPLETED, new CompletedTripGenerator(tripCosts),
-                INCOMPLETE, new IncompleteTripGenerator(tripCosts),
-                CANCELLED, new CancelledTripGenerator()
+                COMPLETED.status, new CompletedTripGenerator(TripFares.tripFareMap),
+                INCOMPLETE.status, new IncompleteTripGenerator(TripFares.tripFareMap),
+                CANCELLED.status, new CancelledTripGenerator()
         );
     }
 
-    public TripGenerator getGenerator(TripStatus status) {
+    public TripGenerator getGenerator(String status) {
         if (!tripGenerators.containsKey(status)) {
-            throw new RuntimeException("No trip generator relevant to given status");
+            throw new RuntimeException("No trip generator relevant to given status: " + status);
         }
 
         return tripGenerators.get(status);

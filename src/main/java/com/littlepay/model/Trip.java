@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import static com.littlepay.helper.DateTimeHelper.formatDate;
+import static com.littlepay.helper.MoneyHelper.formatMoney;
 
 @Builder
 public record Trip(
@@ -22,7 +23,7 @@ public record Trip(
 ) {
     @Override
     public String toString() {
-        return formatDate(started) + ", " + formatDate(finished) + ", " + durationSecs + ", " + fromStopId + ", " + toStopId + ", $"
-                + chargeAmount + ", " + companyId + ", " + busId + ", " + pan + ", " + status;
+        return formatDate(started) + ", " + formatDate(finished) + ", " + durationSecs + ", " + fromStopId + ", " + toStopId + ", "
+                + formatMoney(chargeAmount) + ", " + companyId + ", " + busId + ", " + pan + ", " + status;
     }
 }
