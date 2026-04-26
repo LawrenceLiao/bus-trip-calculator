@@ -33,9 +33,9 @@ public class BusTripCalculatorApplication {
 
         FileReader reader = new FileReader();
 
-        List<TapRecord> list = reader.read(inputPath);
+        List<TapRecord> tapRecords = reader.read(inputPath);
         TripProcessService service = new TripProcessService(new TripCalculator(new TripGeneratorFactory()));
-        List<Trip> trips = service.processTrips(list);
+        List<Trip> trips = service.processTrips(tapRecords);
         FileWriter writer = new FileWriter();
         writer.write(trips, Paths.get(outputPathStr));
     }

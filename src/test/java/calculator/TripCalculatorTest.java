@@ -155,7 +155,7 @@ public class TripCalculatorTest {
         when(factory.getGenerator(eq(INCOMPLETE.status))).thenReturn(incompleteTripGenerator);
         calculator.calculateTrip(offRecord);
         verify(factory).getGenerator(eq(INCOMPLETE.status));
-        verify(incompleteTripGenerator).generate(eq(onRecord), eq(offRecord));
+        verify(incompleteTripGenerator).generate(eq(onRecord), eq(null));
     }
 
 }

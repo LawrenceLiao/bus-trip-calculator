@@ -19,7 +19,7 @@ import static com.littlepay.model.TripStatus.INCOMPLETE;
 @Slf4j
 @RequiredArgsConstructor
 public class TripCalculator {
-    private final Map<String, TapRecord> latestTaps = new HashMap<>();
+    private final Map<String, TapRecord> unmatchedTaps = new HashMap<>();
     private final TripGeneratorFactory factory;
 
     public Trip calculateTrip(TapRecord tapRecord) {
@@ -28,19 +28,23 @@ public class TripCalculator {
             return null;
         }
 
-        if (!latestTaps.containsKey(tapRecord.pan())) {
-            latestTaps.put(tapRecord.pan(), tapRecord);
+        if (!unmatchedTaps.containsKey(tapRecord.pan())) {
+            unmatchedTaps.put(tapRecord.pan(), tapRecord);
             return null;
         }
-        TapRecord lastRecord = latestTaps.remove(tapRecord.pan());
+        TapRecord lastRecord = unmatchedTaps.remove(tapRecord.pan());
         TripStatus status = determineTripStatus(lastRecord, tapRecord);
+
+        if (status.equals(INCOMPLETE)) {
+            tapRecord = null;
+        }
 
         return factory.getGenerator(status.status).generate(lastRecord, tapRecord);
     }
 
     private TripStatus determineTripStatus(TapRecord lastRecord, TapRecord currentRecord) {
         if (currentRecord.tapType().equals(ON)) {
-            latestTaps.put(currentRecord.pan(), currentRecord);
+            unmatchedTaps.put(currentRecord.pan(), currentRecord);
             return INCOMPLETE;
         }
 
@@ -52,6 +56,6 @@ public class TripCalculator {
     }
 
     private boolean isTapOnNotFound(TapRecord tapRecord) {
-        return !latestTaps.containsKey(tapRecord.pan()) && tapRecord.tapType().equals(OFF);
+        return !unmatchedTaps.containsKey(tapRecord.pan()) && tapRecord.tapType().equals(OFF);
     }
 }
