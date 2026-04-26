@@ -6,18 +6,22 @@ import java.math.BigDecimal;
 import java.util.Map;
 
 public class TripCosts {
+    private static final String STOP_1 = "Stop1";
+    private static final String STOP_2 = "Stop2";
+    private static final String STOP_3 = "Stop3";
+
     private static final Map<String, Map<String, TripCost>> tripCostMap = Map.of(
-            "Stop 1", Map.of(
-                    "Stop 2", new TripCost("Stop 1", "Stop 2",  BigDecimal.valueOf(3.25)),
-                    "Stop 3", new TripCost("Stop 1", "Stop 3", BigDecimal.valueOf(7.3))
+            STOP_1, Map.of(
+                    STOP_2, new TripCost(STOP_1, STOP_2, BigDecimal.valueOf(3.25)),
+                    STOP_3, new TripCost(STOP_1, STOP_3, BigDecimal.valueOf(7.3))
             ),
-            "Stop 2", Map.of(
-                    "Stop 1", new TripCost("Stop 2", "Stop 1", BigDecimal.valueOf(3.25)),
-                    "Stop 3", new TripCost("Stop 2", "Stop 3", BigDecimal.valueOf(5.5))
+            STOP_2, Map.of(
+                    STOP_1, new TripCost(STOP_2, STOP_1, BigDecimal.valueOf(3.25)),
+                    STOP_3, new TripCost(STOP_2, STOP_3, BigDecimal.valueOf(5.5))
             ),
-            "Stop 3", Map.of(
-                    "Stop 2", new TripCost("Stop 3", "Stop 2",  BigDecimal.valueOf(5.5)),
-                    "Stop 1", new TripCost("Stop 3", "Stop 1", BigDecimal.valueOf(7.3))
+            STOP_3, Map.of(
+                    STOP_2, new TripCost(STOP_3, STOP_2,  BigDecimal.valueOf(5.5)),
+                    STOP_1, new TripCost(STOP_3, STOP_1, BigDecimal.valueOf(7.3))
             )
     );
 
